@@ -1,0 +1,6 @@
+#evil-list-filter input {
+  color: #000;
+}
+#evil-list-filter input::-webkit-input-placeholder {
+  color: #000;
+}

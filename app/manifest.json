@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -19,6 +19,9 @@
       "matches": [
         "http://*/*",
         "https://*/*"
+      ],
+      "css": [
+        "stylesheets/content.css"
       ],
       "js": [
         "bower_components/jquery2/jquery.min.js",
