@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "trello filter list",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Filters Trello Lists",
+    "description": "The description of the application"
+  }
+}
