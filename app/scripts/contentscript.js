@@ -5,10 +5,11 @@ var $filter = $('<div id="evil-list-filter">' +
 $filter.find('input').on('keyup', function() {
   var $input = $(this);
   var query = new RegExp($input.val(), 'i');
-  $('#board > .list').each(function(el, i) {
+  $('#board > .list-wrapper').each(function(el, i) {
     var $list = $(this);
 
-    var listName = $list.find('h2.list-header-name').text().trim();
+    var listName = $list.find('.list-header-name').text().trim();
+    console.log('listName', listName);
     if (query.test(listName)) {
       $list.show();
     } else {
