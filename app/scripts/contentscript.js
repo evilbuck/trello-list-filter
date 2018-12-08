@@ -9,13 +9,17 @@ $filter.find('input').on('keyup', function() {
     var $list = $(this);
 
     var listName = $list.find('.list-header-name').text().trim();
-    console.log('listName', listName);
     if (query.test(listName)) {
       $list.show();
     } else {
       $list.hide();
     }
   });
+});
+
+let filterInput = $filter.find('input').get(0);
+filterInput.addEventListener('focus', (event) => {
+  filterInput.select();
 });
 
 var domObserver = new MutationObserver(function(mutations) {
