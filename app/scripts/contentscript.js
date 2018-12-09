@@ -61,7 +61,7 @@ $filter.find('input').on('keyup', function() {
   $('#board > .list-wrapper').each(function(el, i) {
     let $list = $(this);
 
-    let listName = $list.find('.list-header-name').text().trim();
+    let listName = $list.find('.list-header').text().trim();
     if (query.test(listName)) {
       $list.show();
     } else {
