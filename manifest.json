@@ -32,6 +32,7 @@
       ],
       "js": [
         "src/jquery.js",
+        "src/inject/lists.js",
         "src/inject/inject.js"
       ],
       "run_at": "document_end"

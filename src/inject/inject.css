@@ -7,3 +7,7 @@
 #evil-list-filter input::-webkit-input-placeholder {
   color: #000;
 }
+
+.trello-list-filter-btn-active {
+  background: hsla(0,0%,100%,.3);
+}
