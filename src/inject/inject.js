@@ -61,7 +61,8 @@ $filter.find('input').on('keyup', function() {
   $('#board > .list-wrapper').each(function(el, i) {
     let $list = $(this);
 
-    let listName = $list.find('.list-header').text().trim();
+    let listName = $list.find('.list-header-name').text().trim();
+    console.log('comparing ', listName, ' to ', queryString);
     if (query.test(listName)) {
       $list.show();
     } else {
@@ -80,31 +81,13 @@ filterInput.addEventListener('focus', (event) => {
   filterInput.select();
 });
 
-
-// chrome.extension.sendMessage({}, function(response) {
-// 	var readyStateCheckInterval = setInterval(function() {
-// 	if (document.readyState === "complete") {
-// 		clearInterval(readyStateCheckInterval);
-
-// 		// ----------------------------------------------------------
-// 		// This part of the script triggers when page is done loading
-// 		console.log("Hello. This message was sent from scripts/inject.js");
-// 		// ----------------------------------------------------------
-//     // $filter.insertAfter('#header .header-search');
-//     // updateAutoCompleteOptions();
-// 	}
-// 	}, 10);
-// });
-
-const domObserver = new MutationObserver(function(mutations) {
-  console.log('dom changed at #header');
+setTimeout(function main() {
+  if (!document.querySelector('#header .header-search')) {
+    setTimeout(main, 200);
+    return;
+  }
   if (!$('#header').find($filter).length) {
     $filter.insertAfter('#header .header-search');
     updateAutoCompleteOptions();
-  //   // resolve();
   }
-});
-
-domObserver.observe(document.querySelector('#header'), { childList: true });
-
-console.log('injecting');
+}, 200);

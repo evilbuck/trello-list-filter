@@ -1,6 +1,6 @@
 {
   "name": "Trello List Filter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "description": "Help manage the horizontal sprawl of trello lists on a single board.",
   "homepage_url": "http://github.com/evilbuck/trello-list-filter",
