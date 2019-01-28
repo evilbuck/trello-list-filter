@@ -1,5 +1,13 @@
 const storageKey = 'trello-list-filter:queryString';
 
+function track() {
+  return new Promise(function(resolve, reject) {
+    chrome.runtime.sendMessage({action: 'track:filter'}, function(response) {
+      resolve(response);
+    });
+  });
+}
+
 function getCurrentItems() {
   let currentItems;
   try {
@@ -46,7 +54,7 @@ function updateAutoCompleteOptions() {
 }
 
 const $filter = $(`
-  <div id="evil-list-filter">' +
+  <div id="evil-list-filter">'
     '<input class="header-search-input" type="text" placeholder="Filter Lists" autocomplete=off
         list="trello-list-filter-autocomplete"/>
     <datalist id="trello-list-filter-autocomplete"></datalist>
@@ -62,7 +70,6 @@ $filter.find('input').on('keyup', function() {
     let $list = $(this);
 
     let listName = $list.find('.list-header-name').text().trim();
-    console.log('comparing ', listName, ' to ', queryString);
     if (query.test(listName)) {
       $list.show();
     } else {
@@ -74,6 +81,7 @@ $filter.find('input').on('keyup', function() {
     clearTimeout(searchTimeout);
   } catch(error) {}
   searchTimeout = setTimeout(() => saveQuery(queryString), 750);
+  track();
 });
 
 const filterInput = $filter.find('input').get(0);
@@ -81,6 +89,8 @@ filterInput.addEventListener('focus', (event) => {
   filterInput.select();
 });
 
+// The required DOM nodes are not initially loaded, so we must
+// look for them and retry if not there yet.
 setTimeout(function main() {
   if (!document.querySelector('#header .header-search')) {
     setTimeout(main, 200);
