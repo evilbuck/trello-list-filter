@@ -15,12 +15,15 @@ chrome.runtime.onMessage.addListener(function actionDispatcher(request, sender, 
   if (request.action === 'track:filter') {
     trackListFilter();
   }
+  if (request.action === 'track:autocomplete') {
+    trackListFilter('autocomplete');
+  }
 
   sendResponse(0);
 });
 
-function trackListFilter() {
-  ga('send', 'event', 'list-filter', 'filter');
+function trackListFilter(label) {
+  ga('send', 'event', 'list-filter', 'filter', label);
 }
 
 function usage() {

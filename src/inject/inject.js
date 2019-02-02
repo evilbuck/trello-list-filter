@@ -1,8 +1,8 @@
 const storageKey = 'trello-list-filter:queryString';
 
-function track() {
+function track(action) {
   return new Promise(function(resolve, reject) {
-    chrome.runtime.sendMessage({action: 'track:filter'}, function(response) {
+    chrome.runtime.sendMessage({action: `track:${action}`}, function(response) {
       resolve(response);
     });
   });
@@ -81,12 +81,18 @@ $filter.find('input').on('keyup', function() {
     clearTimeout(searchTimeout);
   } catch(error) {}
   searchTimeout = setTimeout(() => saveQuery(queryString), 750);
-  track();
+  track('filter');
 });
 
 const filterInput = $filter.find('input').get(0);
 filterInput.addEventListener('focus', (event) => {
   filterInput.select();
+});
+
+filterInput.addEventListener('keydown', (event) => {
+  if (!event.key) {
+    track('autocomplete');
+  }
 });
 
 // The required DOM nodes are not initially loaded, so we must
