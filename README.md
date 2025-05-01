@@ -1,3 +1,13 @@
+# Update
+
+This is looking for a new maintainer. 
+
+I created this when my employer was managing everything through 
+Trello. That employer stopped using Trello, and I stopped working there 6 years ago. I kept up with
+updates. When something broke, I fixed it. However, at some point Google decided to start implementing
+stricter guidelines with regards to the manifest. I just didn't have time to investigate, so this is probably sitting defunct
+in the chrome web store right now. 
+
 # develop
 
 ## test local extension
