@@ -1,6 +1,6 @@
 {
   "name": "Trello List Filter",
-  "version": "1.3.0",
+  "version": "3.0.0",
   "manifest_version": 3,
   "description": "Help manage the horizontal sprawl of trello lists on a single board.",
   "homepage_url": "http://github.com/evilbuck/trello-list-filter",
@@ -10,7 +10,11 @@
     "128": "icons/trello-tile-128.png"
   },
   "default_locale": "en",
+  "permissions": ["storage"],
   "host_permissions": ["http://trello.com/*", "https://trello.com/*"],
+  "background": {
+    "service_worker": "src/bg/background.js"
+  },
   "content_scripts": [
     {
       "matches": ["http://trello.com/*", "https://trello.com/*"],

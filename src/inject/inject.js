@@ -9,25 +9,28 @@ function track(action) {
 }
 
 function getCurrentItems() {
-  let currentItems;
-  try {
-    currentItems = JSON.parse(localStorage.getItem(storageKey));
-    if (!(currentItems instanceof Array)) {
-      throw new Error('items not an Array');
-    }
-  } catch (error) {
-    currentItems = [];
-  }
-
-  return currentItems;
+  return new Promise((resolve) => {
+    chrome.storage.local.get([storageKey], (result) => {
+      let currentItems;
+      try {
+        currentItems = result[storageKey];
+        if (!(currentItems instanceof Array)) {
+          throw new Error('items not an Array');
+        }
+      } catch (error) {
+        currentItems = [];
+      }
+      resolve(currentItems);
+    });
+  });
 }
 
-function saveQuery(expr) {
+async function saveQuery(expr) {
   // don't save a lack of value
   if (expr === '' || expr === null || expr === undefined) {
     return;
   }
-  let currentItems = getCurrentItems();
+  let currentItems = await getCurrentItems();
   currentItems.unshift(expr);
 
   let updatedItems = currentItems
@@ -40,12 +43,12 @@ function saveQuery(expr) {
     }, [])
     .slice(0, 7);
 
-  localStorage.setItem(storageKey, JSON.stringify(updatedItems));
+  chrome.storage.local.set({ [storageKey]: updatedItems });
   updateAutoCompleteOptions();
 }
 
-function updateAutoCompleteOptions() {
-  let currentItems = getCurrentItems();
+async function updateAutoCompleteOptions() {
+  let currentItems = await getCurrentItems();
   let autocompleteList = document.getElementById('trello-list-filter-autocomplete');
   autocompleteList.innerHTML = '';
   currentItems.forEach((item) => {
@@ -67,10 +70,10 @@ $filter.find('input').on('keyup', function () {
   let $input = $(this);
   let queryString = $input.val();
   let query = new RegExp(queryString, 'i');
-  $('#board > .list-wrapper').each(function (el, i) {
+  $('#board > li[data-testid="list-wrapper"]').each(function (el, i) {
     let $list = $(this);
 
-    let listName = $list.find('.list-header-name').text().trim();
+    let listName = $list.find('[data-testid="list-name"]').text().trim();
     if (query.test(listName)) {
       $list.show();
     } else {
@@ -110,6 +113,7 @@ setTimeout(function main() {
     hasRun = true;
     version = 2;
   }
+
 
   if (!hasRun) {
     setTimeout(main, 200);
