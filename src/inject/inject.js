@@ -100,6 +100,32 @@ filterInput.addEventListener('keydown', (event) => {
   }
 });
 
+function isMacOS() {
+  return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+}
+
+function isFilterShortcut(event) {
+  const isMac = isMacOS();
+  const isCorrectKey = event.key.toLowerCase() === 'k';
+  const hasCorrectModifier = isMac ? event.metaKey : event.ctrlKey;
+  const noOtherModifiers =
+    !event.altKey && !event.shiftKey && !(isMac && event.ctrlKey) && !(!isMac && event.metaKey);
+
+  return isCorrectKey && hasCorrectModifier && noOtherModifiers;
+}
+
+function handleGlobalKeydown(event) {
+  if (isFilterShortcut(event)) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const filterInput = document.querySelector('#evil-list-filter input');
+    if (filterInput) {
+      filterInput.focus();
+    }
+  }
+}
+
 // The required DOM nodes are not initially loaded, so we must
 // look for them and retry if not there yet.
 setTimeout(function main() {
@@ -114,20 +140,23 @@ setTimeout(function main() {
     version = 2;
   }
 
-
   if (!hasRun) {
     setTimeout(main, 200);
     return;
   }
 
-  if (version === 1 && !$('#header').find($filter).length) {
-    $filter.insertAfter('#header .header-search');
+  const container_selector = '.board-header > div';
+  if (version === 1 && !$(container_selector).find($filter).length) {
+    $(container_selector).append($filter);
+    // $filter.insertAfter('#header .header-search');
     updateAutoCompleteOptions();
+    document.addEventListener('keydown', handleGlobalKeydown);
   }
 
-  if (version === 2 && !$('.board-header').find($filter).length) {
-    // $filter.insertAfter('.board-header .header-search');
-    $filter.appendTo('.board-header');
+  let $container = $('.board-header [aria-label="Board name"]').parent();
+  if (version === 2 && !$container.find($filter).length) {
+    $container.append($filter);
     updateAutoCompleteOptions();
+    document.addEventListener('keydown', handleGlobalKeydown);
   }
 }, 200);
