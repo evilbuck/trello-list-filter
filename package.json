@@ -1,0 +1,26 @@
+{
+  "name": "trello-list-filter",
+  "version": "3.0.0",
+  "description": "Help manage the horizontal sprawl of trello lists on a single board.",
+  "main": "src/inject/inject.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "package": "npm run build && node scripts/package.js",
+    "clean": "rm -rf dist/ releases/",
+    "dev": "npm run build && echo 'Load dist/ folder in Chrome Extensions developer mode'",
+    "validate": "node scripts/validate.js"
+  },
+  "keywords": ["chrome-extension", "trello", "productivity"],
+  "author": "evilbuck",
+  "license": "MIT",
+  "homepage": "https://github.com/evilbuck/trello-list-filter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evilbuck/trello-list-filter.git"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.0.0",
+    "archiver": "^6.0.0",
+    "chalk": "^4.1.2"
+  }
+}

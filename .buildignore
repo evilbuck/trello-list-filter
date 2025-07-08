@@ -1,0 +1,58 @@
+# Build ignore file for Chrome Extension packaging
+# Files and directories listed here will be excluded from the build
+
+# Development files
+.git/
+.gitignore
+.buildignore
+node_modules/
+package.json
+package-lock.json
+
+# Documentation
+README.md
+CLAUDE.md
+*.md
+
+# Configuration files
+prettier.config.js
+.prettierrc*
+.eslintrc*
+.editorconfig
+
+# Build and development scripts
+scripts/
+
+# Old directory structure (legacy)
+js/
+css/
+background.js
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+*.log
+
+# Testing
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Build artifacts
+dist/
+releases/
+build/
+
+# Other common development files
+.env
+.env.local
+.env.development
+.env.production
